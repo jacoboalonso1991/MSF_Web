@@ -85,14 +85,15 @@ def get_infografias():
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        username = request.form["username"]
+        user = request.form["user"]
         password = request.form["password"]
 
-        if username == ADMIN_USER and password == "1234":
-            session["user"] = username
+        # usuario genérico
+        if user == "hulk" and password == "amb123":
+            session["user"] = user
             return redirect("/dashboard")
 
-        return "Acceso denegado 💀"
+        return render_template("login.html", error="Credenciales incorrectas")
 
     return render_template("login.html")
 

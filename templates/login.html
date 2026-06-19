@@ -2,7 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>HULK AMB Login</title>
+    <title>Hulk AMB Login</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
         body {
@@ -10,13 +12,13 @@
             font-family: Arial;
             background: url('/static/images/msf.jpg') no-repeat center center fixed;
             background-size: cover;
-            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
+            color: white;
         }
 
-        /* overlay oscuro */
         .overlay {
             position: absolute;
             top: 0;
@@ -26,24 +28,18 @@
             background: rgba(0,0,0,0.75);
         }
 
-        /* caja login */
         .login-box {
             position: relative;
             z-index: 1;
-            width: 350px;
-            background: rgba(10,10,10,0.9);
+            width: 320px;
+            background: rgba(0,0,0,0.85);
             border: 2px solid #2ecc71;
+            padding: 30px;
             border-radius: 10px;
-            padding: 25px;
             text-align: center;
         }
 
-        .logo {
-            width: 120px;
-            margin-bottom: 10px;
-        }
-
-        h2 {
+        .login-box h1 {
             color: #2ecc71;
             margin-bottom: 20px;
         }
@@ -51,7 +47,7 @@
         input {
             width: 100%;
             padding: 10px;
-            margin: 8px 0;
+            margin: 10px 0;
             border: none;
             border-radius: 5px;
         }
@@ -61,15 +57,17 @@
             padding: 10px;
             background: #2ecc71;
             border: none;
-            color: black;
-            font-weight: bold;
             cursor: pointer;
-            border-radius: 5px;
-            margin-top: 10px;
+            font-weight: bold;
         }
 
         button:hover {
             background: #27ae60;
+        }
+
+        .logo {
+            font-size: 22px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -80,15 +78,18 @@
 
 <div class="login-box">
 
-    <!-- LOGO -->
-    <img src="/static/images/hulk_logo.png" class="logo">
+    <div class="logo">🟢 HULK AMB</div>
 
-    
+    <h1>LOGIN</h1>
 
     <form method="POST">
-        <input type="text" name="username" placeholder="Usuario" required>
+
+        <input type="text" name="user" placeholder="Usuario" required>
+
         <input type="password" name="password" placeholder="Contraseña" required>
+
         <button type="submit">Entrar</button>
+
     </form>
 
 </div>

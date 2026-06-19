@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>👥 MIEMBROS</h1>
+
+<a href="/add_member" style="
+    display:inline-block;
+    padding:10px 15px;
+    background:#2ecc71;
+    color:black;
+    text-decoration:none;
+    border-radius:5px;
+    margin-bottom:15px;
+">
+➕ Añadir miembro
+</a>
+
+<div style="margin-top:20px;">
+
+{% for m in members %}
+
+<div style="
+    background:rgba(0,0,0,0.6);
+    border:1px solid #2ecc71;
+    padding:15px;
+    margin-bottom:10px;
+    border-radius:8px;
+">
+
+    <h3>{{ m["name"] }}</h3>
+    <p>⚡ PC: {{ m["tcp"] }}</p>
+    <p>🎖️ Rol: {{ m["role"] }}</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

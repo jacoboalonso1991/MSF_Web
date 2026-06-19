@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>HULK AMB</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: url('/static/images/msf.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+
+        /* Overlay oscuro */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            z-index: 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 220px;
+            height: 100%;
+            background: rgba(10,10,10,0.95);
+            border-right: 2px solid #2ecc71;
+            z-index: 1;
+            padding-top: 20px;
+        }
+
+        .logo {
+            text-align: center;
+            color: #2ecc71;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .menu a {
+            display: block;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+        }
+
+        .menu a:hover {
+            background: #2ecc71;
+            color: black;
+        }
+
+        /* Contenido */
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="sidebar">
+    <div class="logo">🟢 HULK AMB</div>
+
+    <div class="menu">
+        
+        <a href="/war">⚔️ Guerras</a>
+        <a href="/infografias">🖼️ Infografías</a>
+        <a href="/stats">📊 Estadísticas</a>
+        <a href="/counters">🛡️ Counters</a>
+        <a href="/members">👥 Miembros</a>
+        <a href="/admin">👑 Admin</a>
+        <a href="/logout">🚪 Salir</a>
+    </div>
+</div>   <!-- 👈 ESTE TE FALTA -->
+
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>
+
+    

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>➕ Añadir Counter</h1>
+
+<form method="POST" style="display:flex; flex-direction:column; gap:10px; width:300px;">
+
+    <input name="team" placeholder="Equipo enemigo" required>
+    <input name="counter" placeholder="Counter recomendado" required>
+    <textarea name="note" placeholder="Nota" required></textarea>
+
+    <button type="submit" style="
+        padding:10px;
+        background:#2ecc71;
+        border:none;
+        cursor:pointer;
+        font-weight:bold;
+    ">
+        Guardar
+    </button>
+
+</form>
+
+{% endblock %}

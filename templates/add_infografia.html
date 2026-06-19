@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>➕ Añadir Infografía</h1>
+
+<form method="POST" enctype="multipart/form-data">
+
+    <input type="text" name="nombre" placeholder="Nombre del equipo" required>
+    <br><br>
+
+    <input type="file" name="imagen" required>
+    <br><br>
+
+    <button type="submit" style="
+        padding:10px;
+        background:#2ecc71;
+        border:none;
+        cursor:pointer;
+    ">
+        Subir
+    </button>
+
+</form>
+
+{% endblock %}

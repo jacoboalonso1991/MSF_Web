@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>⚔️ GUERRAS</h1>
+
+<a href="/add_war" style="
+    display:inline-block;
+    padding:10px 15px;
+    background:#2ecc71;
+    color:black;
+    text-decoration:none;
+    border-radius:5px;
+    margin-bottom:15px;
+">
+    ➕ Añadir guerra
+</a>
+
+<div style="margin-top:20px;">
+
+    {% for war in wars %}
+    <div style="
+        background: rgba(0,0,0,0.6);
+        border: 1px solid #2ecc71;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+    ">
+
+        <h3>🛡️ vs {{ war["rival"] }}</h3>
+
+        <p>
+            🏆 Liga: {{ war["liga"] }} <br>
+            📅 Fecha: {{ war["fecha"] }} <br>
+            📊 Resultado: 
+            <b style="color:
+                {% if war['resultado'] == 'Victoria' %}
+                    #2ecc71
+                {% else %}
+                    #e74c3c
+                {% endif %}
+            ">
+                {{ war["resultado"] }}
+            </b>
+            <br>
+            ⚠️ Fallos: {{ war["fallos"] }} <br>
+            🛡️ Defensas: {{ war["defensas"] }}
+        </p>
+
+        {% if session["user"] == "Knull" %}
+        <form method="POST" action="/delete_war">
+            <input type="hidden" name="id" value="{{ war['id'] }}">
+            <button type="submit" style="
+                background:#e74c3c;
+                color:white;
+                border:none;
+                padding:8px;
+                cursor:pointer;
+                border-radius:5px;
+            ">
+                ❌ Borrar
+            </button>
+        </form>
+        {% endif %}
+
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

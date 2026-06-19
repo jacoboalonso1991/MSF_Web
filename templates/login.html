@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>HULK AMB Login</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: url('/static/images/msf.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* overlay oscuro */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+        }
+
+        /* caja login */
+        .login-box {
+            position: relative;
+            z-index: 1;
+            width: 350px;
+            background: rgba(10,10,10,0.9);
+            border: 2px solid #2ecc71;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 120px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #2ecc71;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #2ecc71;
+            border: none;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #27ae60;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="login-box">
+
+    <!-- LOGO -->
+    <img src="/static/images/hulk_logo.png" class="logo">
+
+    
+
+    <form method="POST">
+        <input type="text" name="username" placeholder="Usuario" required>
+        <input type="password" name="password" placeholder="Contraseña" required>
+        <button type="submit">Entrar</button>
+    </form>
+
+</div>
+
+</body>
+</html>

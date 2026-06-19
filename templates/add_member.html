@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>➕ Añadir Miembro</h1>
+
+<form method="POST" style="margin-top:20px;">
+
+    <input name="name" placeholder="Nombre" required><br><br>
+
+    <input name="role" placeholder="Rol (Líder, Capitán...)" required><br><br>
+
+    <input name="pc" placeholder="PC / TCP" required><br><br>
+
+    <button type="submit" style="
+        padding:10px 15px;
+        background:#2ecc71;
+        border:none;
+        cursor:pointer;
+    ">
+        Guardar
+    </button>
+
+</form>
+
+{% endblock %}

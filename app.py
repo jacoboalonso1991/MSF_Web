@@ -4,6 +4,10 @@ import os
 import csv
 import sqlite3
 
+
+def admin_required():
+    return session.get("role") == "admin"
+
 def get_counters():
     results = []
 
@@ -88,10 +92,17 @@ def login():
         user = request.form["user"]
         password = request.form["password"]
 
-        # usuario genérico
+        # ADMIN
+        if user == "knull" and password == "1234":
+            session["user"] = user
+            session["role"] = "admin"
+            return redirect("/counters")
+
+        # USUARIO NORMAL
         if user == "hulk" and password == "amb123":
             session["user"] = user
-            return redirect("/dashboard")
+            session["role"] = "user"
+            return redirect("/counters")
 
         return render_template("login.html", error="Credenciales incorrectas")
 
@@ -171,6 +182,10 @@ def infografias():
 
 @app.route("/add_infografia", methods=["GET", "POST"])
 def add_infografia():
+
+    if not admin_required():
+        return "No autorizado", 403
+
     if "user" not in session:
         return redirect("/")
 
@@ -194,6 +209,8 @@ def add_infografia():
         conn.close()
 
         return redirect("/infografias")
+
+    return render_template("add_infografia.html")
 
     return render_template("add_infografia.html")
 @app.route("/infografia/<int:id>")
@@ -368,6 +385,9 @@ def logout():
 def add_war():
     if "user" not in session:
         return redirect("/")
+    
+    if not admin_required():
+        return "No autorizado", 403
 
     if request.method == "POST":
         rival = request.form["rival"]
@@ -397,6 +417,9 @@ def add_war():
 def add_counter():
     if "user" not in session:
         return redirect("/")
+    
+    if not admin_required():
+        return "No autorizado", 403
 
     if request.method == "POST":
         team = request.form["team"]

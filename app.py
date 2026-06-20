@@ -345,10 +345,8 @@ def members():
 
 @app.route("/api_test")
 def api_test():
-
-    token_data = get_msf_token()
-
-    return token_data
+    token = get_msf_token()
+    return token
 
 
 @app.route("/add_member", methods=["GET", "POST"])
@@ -495,10 +493,7 @@ def delete_counter(id):
     return redirect("/counters")
 
 
-@app.route("/api_test")
-def api_test():
-    token = get_msf_token()
-    return token
+
 
 
 # ---------------------------

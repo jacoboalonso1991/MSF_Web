@@ -495,6 +495,12 @@ def delete_counter(id):
     return redirect("/counters")
 
 
+@app.route("/api_test")
+def api_test():
+    token = get_msf_token()
+    return token
+
+
 # ---------------------------
 # RUN APP
 # ---------------------------

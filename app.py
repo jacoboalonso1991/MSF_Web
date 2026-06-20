@@ -2,12 +2,42 @@ from flask import Flask, render_template, request, redirect, session
 import sqlite3
 import os
 import csv
-import sqlite3
+import requests
+
+app = Flask(__name__)
+app.secret_key = "hulk_secret_key"
 
 
+# 🟢 ADMIN CHECK
 def admin_required():
     return session.get("role") == "admin"
 
+
+# 🟢 MSF API TOKEN (SEPARADO)
+def get_msf_token():
+
+    url = "https://api.marvelstrikeforce.com/oauth/token"
+
+    data = {
+        "grant_type": "client_credentials",
+        "client_id": "b6f8eb1f-40fa-4683-843d-f5588aa0e248",
+        "client_secret": "QRZOnnt1plwLYjE522va.G3~65"
+    }
+
+    headers = {
+        "x-api-key": "17wMKJLRxy3pYDCKG5ciP7VSU45OVumB2biCzzgw",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.post(url, json=data, headers=headers)
+
+    print(response.status_code)
+    print(response.text)
+
+    return response.json()
+
+
+# 🟢 COUNTERS (CSV + SQLITE)
 def get_counters():
     results = []
 
@@ -22,6 +52,7 @@ def get_counters():
                     "counter": row.get("Counter") or row.get("counter"),
                     "note": row.get("Note") or row.get("note")
                 })
+
     except FileNotFoundError:
         print("No CSV found")
 
@@ -43,9 +74,6 @@ def get_counters():
     conn.close()
 
     return results
-
-app = Flask(__name__)
-app.secret_key = "hulk_secret_key"
 
 ADMIN_USER = "Knull"
 
@@ -213,6 +241,7 @@ def add_infografia():
     return render_template("add_infografia.html")
 
     return render_template("add_infografia.html")
+
 @app.route("/infografia/<int:id>")
 def ver_infografia(id):
     if "user" not in session:
@@ -312,6 +341,14 @@ def members():
     conn.close()
 
     return render_template("members.html", members=data)
+
+
+@app.route("/api_test")
+def api_test():
+
+    token_data = get_msf_token()
+
+    return token_data
 
 
 @app.route("/add_member", methods=["GET", "POST"])

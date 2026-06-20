@@ -29,7 +29,13 @@ def get_msf_token():
         "Content-Type": "application/json"
     }
 
-    response = requests.post(url, json=data, headers=headers)
+    response = requests.post(url, data=data, headers=headers)
+
+    print(response.status_code)
+    print(response.text)
+
+    return response.json()
+    
 
     print(response.status_code)
     print(response.text)

@@ -345,8 +345,18 @@ def members():
 
 @app.route("/api_test")
 def api_test():
-    token = get_msf_token()
-    return token
+    try:
+        token = get_msf_token()
+        return {
+            "status": "ok",
+            "token_received": "access_token" in token,
+            "raw": token
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": str(e)
+        }
 
 
 @app.route("/add_member", methods=["GET", "POST"])

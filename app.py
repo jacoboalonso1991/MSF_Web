@@ -493,22 +493,25 @@ def team_view(team):
     if "user" not in session:
         return redirect("/")
 
-    team_clean = unquote(team).strip().lower()
+    team = unquote(team).strip().lower()
 
     data = get_counters()
 
-    # DEBUG (puedes dejarlo 1 vez)
-    print("TEAM URL:", team_clean)
+    # 🧠 DEBUG AQUÍ
+    print("=== TEAM URL ===")
+    print(repr(team))
+
+    print("=== CSV TEAMS ===")
+    for c in data:
+        print(repr(c.get("team")))
 
     variations = sorted(
         set(
-            c.get("variation", "").strip()
+            c.get("variation", "")
             for c in data
-            if c.get("team", "").strip().lower() == team_clean
+            if (c.get("team", "") or "").strip().lower() == team
         )
     )
-
-    print("VARIATIONS FOUND:", variations)
 
     return render_template(
         "variations.html",

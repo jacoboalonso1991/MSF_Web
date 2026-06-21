@@ -3,6 +3,7 @@ import sqlite3
 import os
 import csv
 import requests
+from urllib.parse import unquote
 
 app = Flask(__name__)
 app.secret_key = "hulk_secret_key"
@@ -492,13 +493,15 @@ def team_view(team):
     if "user" not in session:
         return redirect("/")
 
+    team = unquote(team)  # 🔑 clave para URLs
+
     data = get_counters()
 
     variations = sorted(
         set(
-            c["variation"]
+            c.get("variation", "")
             for c in data
-            if c["team"] == team
+            if c.get("team", "") == team
         )
     )
 

@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>{{ variation }}</h1>
+
+<a href="{{ url_for('team_view', team=team) }}">⬅ Volver</a>
+
+{% for c in counters %}
+
+<div style="padding:15px; margin:10px; background:#111; border:1px solid #2ecc71;">
+
+    <h3>{{ c.counter }}</h3>
+
+    <p>{{ c.note }}</p>
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

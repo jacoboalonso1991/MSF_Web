@@ -5,6 +5,11 @@ import csv
 import requests
 from urllib.parse import unquote
 
+def normalize(text):
+    return (text or "").strip().lower()
+
+
+
 app = Flask(__name__)
 app.secret_key = "hulk_secret_key"
 
@@ -324,22 +329,25 @@ def counters():
         return redirect("/")
 
     data = get_counters()
-
     query = request.args.get("q", "").lower()
+
+    teams = sorted(set(c["team"] for c in data))
 
     team_data = []
 
-    for team in sorted(set(c["team"] for c in data)):
+    for team in teams:
 
-        variations = set(
-            c.get("variation", "")
-            for c in data
-            if c["team"] == team
+        variations = len(
+            set(
+                c.get("variation", "")
+                for c in data
+                if c.get("team") == team
+            )
         )
 
         team_data.append({
             "team": team,
-            "count": len(variations)
+            "count": variations
         })
 
     if query:
@@ -487,29 +495,32 @@ def add_war():
     return render_template("add_war.html")
 
 
+def normalize(text):
+    return (text or "").strip().lower()
+
 @app.route("/team/<path:team>")
 def team_view(team):
 
     if "user" not in session:
         return redirect("/")
 
-    team = unquote(team).strip().lower()
+    team_clean = normalize(unquote(team))
 
     data = get_counters()
 
-    # 🧠 DEBUG AQUÍ
-    print("=== TEAM URL ===")
-    print(repr(team))
+    # 👇 DEBUG AQUÍ (JUSTO DESPUÉS DE DATA)
+    print("TEAM:", team_clean)
+    print("MATCHES:")
 
-    print("=== CSV TEAMS ===")
     for c in data:
-        print(repr(c.get("team")))
+        if normalize(c.get("team")) == team_clean:
+            print(c)
 
     variations = sorted(
         set(
-            c.get("variation", "")
+            c.get("variation", "").strip()
             for c in data
-            if (c.get("team", "") or "").strip().lower() == team
+            if normalize(c.get("team")) == team_clean
         )
     )
 
@@ -519,7 +530,7 @@ def team_view(team):
         variations=variations
     )
 
-@app.route("/variation/<team>/<variation>")
+@app.route("/variation/<path:team>/<path:variation>")
 def variation_view(team, variation):
 
     if "user" not in session:
@@ -528,16 +539,17 @@ def variation_view(team, variation):
     data = get_counters()
 
     counters = [
-        c for c in data
-        if c["team"] == team and c["variation"] == variation
-    ]
+    c for c in data
+    if c.get("team", "").strip().lower() == team.strip().lower()
+    and c.get("variation", "").strip().lower() == variation.strip().lower()
+]
 
     return render_template(
-        "variation.html",
-        team=team,
-        variation=variation,
-        counters=counters
-    )
+    "variation_counters.html",
+    counters=counters,
+    team=team,
+    variation=variation
+)
 
 
 @app.route("/add_counter", methods=["GET", "POST"])

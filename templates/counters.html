@@ -17,12 +17,9 @@
 
 {% for item in teams %}
 
-<div style="padding:15px; margin:10px; background:#111; border:1px solid #2ecc71; border-radius:6px;">
+<div style="padding:15px; margin:10px; background:#111; border:1px solid #2ecc71;">
 
-    <a 
-        href="/team/{{ item.team | urlencode }}" 
-        style="color:white; text-decoration:none; font-size:18px;"
-    >
+    <a href="/team/{{ item.team | urlencode }}" style="color:white;">
         {{ item.team }} ({{ item.count }} variaciones)
     </a>
 

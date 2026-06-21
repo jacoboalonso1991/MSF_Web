@@ -48,7 +48,7 @@
 
     {% endif %}
 
-    {% for team in teams %}
+    {% for item in teams %}
 
 <div style="
 background:rgba(0,0,0,0.6);
@@ -58,7 +58,7 @@ margin-bottom:10px;
 border-radius:8px;
 ">
 
-    <a href="/team/{{ team }}"
+    <a href="/team/{{ item.team }}"
        style="
        color:white;
        text-decoration:none;

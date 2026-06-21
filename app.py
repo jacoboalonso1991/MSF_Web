@@ -322,17 +322,32 @@ def counters():
 
     query = request.args.get("q", "").lower()
 
-    teams = sorted(set(c["team"] for c in data))
+    team_data = []
+
+    for team in sorted(set(c["team"] for c in data)):
+
+        variation_count = len(
+            set(
+                c["variation"]
+                for c in data
+                if c["team"] == team
+            )
+        )
+
+        team_data.append({
+            "team": team,
+            "count": variation_count
+        })
 
     if query:
-        teams = [
-            t for t in teams
-            if query in t.lower()
+        team_data = [
+            t for t in team_data
+            if query in t["team"].lower()
         ]
 
     return render_template(
         "counters.html",
-        teams=teams,
+        teams=team_data,
         query=query
     )
 

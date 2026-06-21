@@ -497,13 +497,19 @@ def team_view(team):
 
     data = get_counters()
 
+    # DEBUG (puedes borrarlo luego)
+    print("URL TEAM:", team)
+    print("CSV TEAMS:", [c.get("team") for c in data])
+
     variations = sorted(
         set(
-            c.get("variation", "")
+            c.get("variation", "").strip()
             for c in data
             if c.get("team", "").strip().lower() == team
         )
     )
+
+    print("VARIATIONS FOUND:", variations)
 
     return render_template(
         "variations.html",

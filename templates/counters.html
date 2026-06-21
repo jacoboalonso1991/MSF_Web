@@ -17,13 +17,31 @@
 
 {% for item in teams %}
 
-<div style="padding:15px; margin:10px; background:#111; border:1px solid #2ecc71;">
+<a href="/team/{{ item.team | urlencode }}"
+   style="
+      display:block;
+      padding:15px;
+      margin:10px 0;
+      background:#1b1b1b;
+      border:2px solid #2ecc71;
+      border-radius:8px;
+      color:white;
+      text-decoration:none;
+      transition:0.2s;
+   "
+   onmouseover="this.style.background='#2ecc71';this.style.color='black';"
+   onmouseout="this.style.background='#1b1b1b';this.style.color='white';"
+>
 
-    <a href="/team/{{ item.team | urlencode }}" style="color:white;">
-        {{ item.team }} ({{ item.count }} variaciones)
-    </a>
+    <div style="font-size:20px; font-weight:bold;">
+        {{ item.team }}
+    </div>
 
-</div>
+    <div style="font-size:14px; opacity:0.8;">
+        {{ item.count }} variaciones
+    </div>
+
+</a>
 
 {% endfor %}
 

@@ -508,28 +508,34 @@ def team_view(team):
 
     data = get_counters()
 
-    # 👇 DEBUG AQUÍ (JUSTO DESPUÉS DE DATA)
-    print("TEAM:", team_clean)
-    print("MATCHES:")
+    variation_data = []
 
-    for c in data:
-        if normalize(c.get("team")) == team_clean:
-            print(c)
-
-    variations = sorted(
+    for variation in sorted(
         set(
             c.get("variation", "").strip()
             for c in data
             if normalize(c.get("team")) == team_clean
         )
-    )
+    ):
+
+        counter_count = len(
+            [
+                c for c in data
+                if normalize(c.get("team")) == team_clean
+                and normalize(c.get("variation")) == normalize(variation)
+            ]
+        )
+
+        variation_data.append({
+            "name": variation,
+            "count": counter_count
+        })
 
     return render_template(
         "variations.html",
         team=team,
-        variations=variations
+        variations=variation_data
     )
-
 @app.route("/variation/<path:team>/<path:variation>")
 def variation_view(team, variation):
 

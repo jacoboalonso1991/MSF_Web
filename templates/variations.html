@@ -8,11 +8,27 @@
 
 {% for v in variations %}
 
-<div style="padding:10px; margin:10px; background:#222; border:1px solid #2ecc71;">
-    <a href="/variation/{{ team | urlencode }}/{{ v | urlencode }}">
-    {{ v }}
+<a href="/variation/{{ team | urlencode }}/{{ v.name | urlencode }}"
+   style="
+      display:block;
+      padding:15px;
+      margin:10px 0;
+      background:#1b1b1b;
+      border:2px solid #2ecc71;
+      border-radius:8px;
+      color:white;
+      text-decoration:none;
+   ">
+
+    <div style="font-size:18px;font-weight:bold;">
+        {{ v.name }}
+    </div>
+
+    <div style="font-size:13px;opacity:0.8;">
+        {{ v.count }} counter(s)
+    </div>
+
 </a>
-</div>
 
 {% endfor %}
 

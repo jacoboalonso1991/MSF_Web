@@ -3,74 +3,23 @@
 {% block content %}
 
 <h1>🛡️ COUNTERS</h1>
-<a href="/add_counter" style="
-    display:inline-block;
-    padding:10px 15px;
-    background:#2ecc71;
-    color:black;
-    text-decoration:none;
-    border-radius:5px;
-    margin-bottom:15px;
-">
-    ➕ Añadir counter
-</a>
-<form method="GET" action="/counters" style="margin-bottom:20px;">
-    <input 
-        type="text" 
-        name="q" 
-        placeholder="Buscar counter (ej: Ultron, 4F...)" 
-        value="{{ query }}"
-        style="
-            padding:10px;
-            width:300px;
-            border-radius:6px;
-            border:none;
-        "
-    >
 
-    <button type="submit" style="
-        padding:10px;
-        background:#2ecc71;
-        border:none;
-        border-radius:6px;
-        cursor:pointer;
-        font-weight:bold;
-    ">
-        Buscar
-    </button>
+<form method="GET" action="/counters">
+    <input type="text" name="q" value="{{ query }}" placeholder="Buscar team">
+    <button>Buscar</button>
 </form>
 
-<div style="margin-top:20px;">
+{% for item in teams %}
 
-    {% if counters|length == 0 %}
-
-        <p style="color:#aaa;">No hay counters cargados todavía.</p>
-
-    {% endif %}
-
-    {% for item in teams %}
-
-<div style="
-background:rgba(0,0,0,0.6);
-border:1px solid #2ecc71;
-padding:15px;
-margin-bottom:10px;
-border-radius:8px;
-">
-
-    <a href="/team/{{ item.team }}"
-       style="
-       color:white;
-       text-decoration:none;
-       font-size:22px;
-       font-weight:bold;
-       ">
-       {{ team }}
+<div style="padding:15px; margin:10px; background:#111; border:1px solid #2ecc71;">
+    <a href="/team/{{ item.team }}" style="color:white; text-decoration:none;">
+        {{ item.team }} ({{ item.count }} variaciones)
     </a>
-
 </div>
 
 {% endfor %}
+
+{% endblock %}
 
 </div>
 

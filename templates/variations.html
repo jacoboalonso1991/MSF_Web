@@ -2,37 +2,17 @@
 
 {% block content %}
 
-<h1>🛡️ {{ team }}</h1>
+<h1>{{ team }}</h1>
+<h3>{{ variation }}</h3>
 
-<a href="/counters"
-   style="
-   display:inline-block;
-   margin-bottom:20px;
-   color:#2ecc71;
-   text-decoration:none;
-   ">
-   ← Volver
-</a>
+<a href="/team/{{ team }}">⬅ Volver</a>
 
-{% for variation in variations %}
+{% for c in counters %}
 
-<div style="
-background:rgba(0,0,0,0.6);
-border:1px solid #2ecc71;
-padding:15px;
-margin-bottom:10px;
-border-radius:8px;
-">
+<div style="padding:15px; margin:10px; background:#111; border:1px solid #2ecc71;">
 
-    <a href="/variation/{{ team }}/{{ variation }}"
-       style="
-       color:white;
-       text-decoration:none;
-       font-size:20px;
-       font-weight:bold;
-       ">
-       {{ variation }}
-    </a>
+    <h3>{{ c.counter }}</h3>
+    <p>{{ c.note }}</p>
 
 </div>
 

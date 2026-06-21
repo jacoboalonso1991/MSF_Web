@@ -47,21 +47,23 @@ def get_msf_token():
 def get_counters():
     results = []
 
-    # 1️⃣ LEER CSV
+    # 1️⃣ CSV (FUENTE PRINCIPAL)
     try:
         with open("counters.csv", newline="", encoding="utf-8") as file:
             reader = csv.DictReader(file)
 
             for row in reader:
                 results.append({
-                    "team": row.get("Team") or row.get("team"),
-                    "variation": row.get("Variation") or row.get("variation"),
-                    "counter": row.get("Counter") or row.get("counter"),
-                    "note": row.get("Note") or row.get("note")
+                    "team": row.get("team") or row.get("Team"),
+                    "variation": row.get("variation") or row.get("Variation"),
+                    "counter": row.get("counter") or row.get("Counter"),
+                    "note": row.get("note") or row.get("Note")
                 })
 
     except FileNotFoundError:
         print("No CSV found")
+
+    return results
 
     # 2️⃣ LEER SQLITE
     conn = sqlite3.connect("hulkamb.db")
@@ -328,17 +330,15 @@ def counters():
 
     for team in sorted(set(c["team"] for c in data)):
 
-        variation_count = len(
-    set(
-        c.get("variation", "")
-        for c in data
-        if c["team"] == team
-    )
-)
+        variations = set(
+            c.get("variation", "")
+            for c in data
+            if c["team"] == team
+        )
 
         team_data.append({
             "team": team,
-            "count": variation_count
+            "count": len(variations)
         })
 
     if query:
@@ -484,6 +484,50 @@ def add_war():
         return redirect("/war")
 
     return render_template("add_war.html")
+
+
+@app.route("/team/<team>")
+def team_view(team):
+
+    if "user" not in session:
+        return redirect("/")
+
+    data = get_counters()
+
+    variations = sorted(
+        set(
+            c["variation"]
+            for c in data
+            if c["team"] == team
+        )
+    )
+
+    return render_template(
+        "variations.html",
+        team=team,
+        variations=variations
+    )
+
+
+@app.route("/variation/<team>/<variation>")
+def variation_view(team, variation):
+
+    if "user" not in session:
+        return redirect("/")
+
+    data = get_counters()
+
+    counters = [
+        c for c in data
+        if c["team"] == team and c["variation"] == variation
+    ]
+
+    return render_template(
+        "variation.html",
+        team=team,
+        variation=variation,
+        counters=counters
+    )
 
 
 @app.route("/add_counter", methods=["GET", "POST"])

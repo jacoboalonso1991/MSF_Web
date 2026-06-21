@@ -48,27 +48,25 @@
 
     {% endif %}
 
-    {% for c in counters %}
+    {% for team in teams %}
 
-<div style="background:rgba(0,0,0,0.6); border:1px solid #2ecc71; padding:15px; margin-bottom:10px; border-radius:8px;">
+<div style="
+background:rgba(0,0,0,0.6);
+border:1px solid #2ecc71;
+padding:15px;
+margin-bottom:10px;
+border-radius:8px;
+">
 
-    <h3>{{ c.team }} ➜ {{ c.counter }}</h3>
-    <p>{{ c.note }}</p>
-
-    {% if session["user"] == "admin" %}
-    <a href="/delete_counter/{{ c.id }}" style="
-        display:inline-block;
-        margin-top:10px;
-        padding:5px 10px;
-        background:#e74c3c;
-        color:white;
-        text-decoration:none;
-        border-radius:5px;
-        font-size:12px;
-    ">
-        🗑️ Eliminar
+    <a href="/team/{{ team }}"
+       style="
+       color:white;
+       text-decoration:none;
+       font-size:22px;
+       font-weight:bold;
+       ">
+       {{ team }}
     </a>
-    {% endif %}
 
 </div>
 

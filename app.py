@@ -312,8 +312,9 @@ def stats():
     )
 
 
-@app.route("/counters", methods=["GET"])
+@app.route("/counters")
 def counters():
+
     if "user" not in session:
         return redirect("/")
 
@@ -321,15 +322,19 @@ def counters():
 
     query = request.args.get("q", "").lower()
 
+    teams = sorted(set(c["team"] for c in data))
+
     if query:
-        data = [
-            c for c in data
-            if query in c["team"].lower()
-            or query in c["counter"].lower()
-            or query in c["note"].lower()
+        teams = [
+            t for t in teams
+            if query in t.lower()
         ]
 
-    return render_template("counters.html", counters=data, query=query)
+    return render_template(
+        "counters.html",
+        teams=teams,
+        query=query
+    )
 
 
 @app.route("/members")

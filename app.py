@@ -55,6 +55,7 @@ def get_counters():
             for row in reader:
                 results.append({
                     "team": row.get("Team") or row.get("team"),
+                    "variation": row.get("Variation") or row.get("variation"),
                     "counter": row.get("Counter") or row.get("counter"),
                     "note": row.get("Note") or row.get("note")
                 })
@@ -73,6 +74,7 @@ def get_counters():
     for r in rows:
         results.append({
             "team": r["team"],
+            "variation": r["variation"] if "variation" in r.keys() else "",
             "counter": r["counter"],
             "note": r["note"]
         })
@@ -327,12 +329,12 @@ def counters():
     for team in sorted(set(c["team"] for c in data)):
 
         variation_count = len(
-            set(
-                c["variation"]
-                for c in data
-                if c["team"] == team
-            )
-        )
+    set(
+        c.get("variation", "")
+        for c in data
+        if c["team"] == team
+    )
+)
 
         team_data.append({
             "team": team,

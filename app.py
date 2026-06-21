@@ -487,13 +487,13 @@ def add_war():
     return render_template("add_war.html")
 
 
-@app.route("/team/<team>")
+@app.route("/team/<path:team>")
 def team_view(team):
 
     if "user" not in session:
         return redirect("/")
 
-    team = unquote(team)  # 🔑 clave para URLs
+    team = unquote(team).strip().lower()
 
     data = get_counters()
 
@@ -501,7 +501,7 @@ def team_view(team):
         set(
             c.get("variation", "")
             for c in data
-            if c.get("team", "") == team
+            if c.get("team", "").strip().lower() == team
         )
     )
 
@@ -510,7 +510,6 @@ def team_view(team):
         team=team,
         variations=variations
     )
-
 
 @app.route("/variation/<team>/<variation>")
 def variation_view(team, variation):

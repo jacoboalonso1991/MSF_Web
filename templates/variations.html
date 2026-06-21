@@ -5,7 +5,7 @@
 <h1>{{ team }}</h1>
 <h3>{{ variation }}</h3>
 
-<a href="/team/{{ team }}">⬅ Volver</a>
+<a href="{{ url_for('counters') }}">⬅ Volver</a>
 
 {% for c in counters %}
 

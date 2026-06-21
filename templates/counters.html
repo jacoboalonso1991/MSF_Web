@@ -5,16 +5,27 @@
 <h1>🛡️ COUNTERS</h1>
 
 <form method="GET" action="/counters">
-    <input type="text" name="q" value="{{ query }}" placeholder="Buscar team">
-    <button>Buscar</button>
+    <input 
+        type="text" 
+        name="q" 
+        value="{{ query }}" 
+        placeholder="Buscar team"
+        style="padding:10px; width:250px;"
+    >
+    <button type="submit">Buscar</button>
 </form>
 
 {% for item in teams %}
 
-<div style="padding:15px; margin:10px; background:#111; border:1px solid #2ecc71;">
-    <a href="/team/{{ item.team }}" style="color:white; text-decoration:none;">
+<div style="padding:15px; margin:10px; background:#111; border:1px solid #2ecc71; border-radius:6px;">
+
+    <a 
+        href="/team/{{ item.team | urlencode }}" 
+        style="color:white; text-decoration:none; font-size:18px;"
+    >
         {{ item.team }} ({{ item.count }} variaciones)
     </a>
+
 </div>
 
 {% endfor %}
